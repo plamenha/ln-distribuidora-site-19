@@ -1,0 +1,1506 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LN Express — Produtos de piscina, direto no seu endereço</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#111111;
+  --paper:#ffffff;
+  --sand:#F1EFE8;
+  --line-sand:#E1DDCf;
+  --graphite:#5F5E5A;
+  --petrol:#0B3D3E;
+  --petrol-light:#12595A;
+  --danger:#B23A2E;
+  --radius:2px;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  font-family:'Inter',sans-serif;
+  color:var(--ink);
+  background:var(--paper);
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,.display{
+  font-family:'Space Grotesk',sans-serif;
+  font-weight:600;
+  letter-spacing:-0.01em;
+  margin:0;
+}
+.mono{font-family:'IBM Plex Mono',monospace;}
+a{color:inherit;text-decoration:none;}
+img{max-width:100%;display:block;}
+button{font-family:inherit;cursor:pointer;}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+
+/* ---------- Signature: waterline rule ---------- */
+.waterline{
+  display:flex;align-items:center;gap:10px;
+  margin:0 0 20px 0;
+}
+.waterline::before{
+  content:"";width:22px;height:1px;background:var(--ink);
+}
+.waterline span{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--graphite);
+}
+.waterline::after{
+  content:"";flex:1;height:0.5px;background:var(--line-sand);
+}
+
+/* ---------- Header ---------- */
+header{
+  position:sticky;top:0;z-index:40;
+  background:rgba(255,255,255,0.92);
+  backdrop-filter:blur(8px);
+  border-bottom:0.5px solid var(--line-sand);
+}
+.header-inner{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 24px;max-width:1180px;margin:0 auto;
+}
+.brand{display:flex;align-items:center;gap:12px;}
+.brand-mark{
+  width:38px;height:38px;border:2px solid var(--ink);border-radius:3px;
+  position:relative;flex:none;
+}
+.brand-mark::after{
+  content:"";position:absolute;left:6px;right:6px;top:50%;height:2px;background:var(--ink);
+  transform:translateY(-1px);
+}
+.brand-mark span{
+  position:absolute;top:5px;left:0;right:0;text-align:center;
+  font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:12px;letter-spacing:0.05em;
+}
+.brand-text .name{font-size:15px;font-weight:600;letter-spacing:0.04em;font-family:'Space Grotesk',sans-serif;}
+.brand-text .sub{font-size:9px;letter-spacing:0.16em;color:var(--graphite);text-transform:uppercase;margin-top:1px;}
+
+nav{display:flex;align-items:center;gap:28px;}
+nav a.navlink{font-size:14px;color:var(--ink);}
+nav a.navlink:hover{color:var(--petrol);}
+.free-pill{
+  display:flex;align-items:center;gap:6px;
+  font-size:12px;font-weight:500;color:var(--petrol);
+  border:0.5px solid var(--petrol);border-radius:20px;padding:6px 12px;
+}
+.cart-btn{
+  position:relative;display:flex;align-items:center;gap:8px;
+  border:0.5px solid var(--ink);background:var(--paper);
+  padding:9px 14px;border-radius:2px;font-size:13px;font-weight:500;
+}
+.cart-btn:hover{background:var(--ink);color:var(--paper);}
+.cart-count{
+  background:var(--petrol);color:#fff;border-radius:50%;
+  width:18px;height:18px;font-size:10px;display:flex;align-items:center;justify-content:center;
+  font-family:'IBM Plex Mono',monospace;
+}
+
+/* ---------- Hero ---------- */
+.hero{
+  background:var(--ink);color:#fff;
+  padding:88px 0 72px;
+  position:relative;
+  overflow:hidden;
+}
+.hero-bg{
+  position:absolute;inset:0;z-index:0;
+  background-image:linear-gradient(100deg, rgba(17,17,17,0.92) 0%, rgba(17,17,17,0.80) 34%, rgba(17,17,17,0.40) 64%, rgba(17,17,17,0.12) 100%), url('images/hero-piscineiro.jpg');
+  background-size:cover;background-position:70% 82%;
+}
+.hero .wrap{position:relative;z-index:2;}
+.hero-eyebrow{
+  font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.18em;
+  color:#9fd7cf;text-transform:uppercase;margin-bottom:22px;display:flex;align-items:center;gap:10px;
+}
+.hero-eyebrow::before{content:"";width:22px;height:1px;background:#9fd7cf;}
+.hero h1{
+  font-size:clamp(34px,5.4vw,58px);
+  line-height:1.06;
+  max-width:780px;
+  color:#fff;
+}
+.hero h1 em{font-style:normal;color:#7fe0d4;}
+.hero p.lead{
+  font-size:17px;color:#c9c7c2;max-width:520px;margin:24px 0 34px;line-height:1.6;
+}
+.hero-ctas{display:flex;gap:14px;flex-wrap:wrap;align-items:center;}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:14px 24px;border-radius:2px;font-size:14px;font-weight:600;
+  border:1px solid transparent;
+}
+.btn-primary{background:#fff;color:var(--ink);}
+.btn-primary:hover{background:#7fe0d4;}
+.btn-ghost{border-color:rgba(255,255,255,0.35);color:#fff;}
+.btn-ghost:hover{border-color:#fff;}
+.hero-stats{
+  display:flex;gap:40px;margin-top:56px;padding-top:28px;border-top:0.5px solid rgba(255,255,255,0.18);
+  max-width:780px;flex-wrap:wrap;
+}
+.hero-stats div .num{font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:600;color:#fff;}
+.hero-stats div .lbl{font-size:12px;color:#9c9a95;margin-top:4px;}
+/* ---------- Gallery ---------- */
+.gallery{padding:70px 0;background:var(--paper);}
+.gallery-grid{
+  display:grid;grid-template-columns:1.3fr 1fr 1fr;grid-template-rows:1fr 1fr;gap:14px;
+  height:520px;margin-top:28px;
+}
+.gallery-grid .g1{grid-row:1/3;}
+.gallery-item{
+  position:relative;border-radius:3px;overflow:hidden;background:var(--sand);
+}
+.gallery-item img{width:100%;height:100%;object-fit:cover;display:block;}
+.gallery-item .cap{
+  position:absolute;left:0;right:0;bottom:0;padding:16px 18px;
+  background:linear-gradient(0deg, rgba(11,61,62,0.82) 0%, rgba(11,61,62,0) 100%);
+  color:#fff;font-size:13px;font-weight:500;
+}
+@media (max-width:760px){
+  .gallery-grid{grid-template-columns:1fr 1fr;grid-template-rows:220px 220px;height:auto;}
+  .gallery-grid .g1{grid-row:auto;grid-column:1/3;}
+}
+
+/* ---------- Delivery band ---------- */
+.deliver-band{
+  background:var(--sand);border-bottom:0.5px solid var(--line-sand);
+  padding:14px 0;
+}
+.deliver-band .wrap{
+  display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;
+  font-size:13px;color:var(--graphite);text-align:center;
+}
+.deliver-band strong{color:var(--ink);}
+.deliver-band .dot{width:4px;height:4px;background:var(--graphite);border-radius:50%;}
+
+/* ---------- Catalog ---------- */
+.catalog{padding:76px 0 40px;}
+.catalog-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:8px;flex-wrap:wrap;gap:16px;}
+.catalog-head h2{font-size:30px;}
+.catalog-head p{color:var(--graphite);font-size:14px;max-width:420px;}
+
+.filters{
+  display:flex;gap:8px;flex-wrap:wrap;margin:28px 0 32px;
+}
+.filter-chip{
+  padding:8px 16px;border:0.5px solid var(--line-sand);border-radius:20px;
+  font-size:13px;color:var(--graphite);background:#fff;
+}
+.filter-chip.active{background:var(--ink);color:#fff;border-color:var(--ink);}
+.filter-chip:hover:not(.active){border-color:var(--ink);color:var(--ink);}
+
+.category-block{margin-bottom:56px;}
+.category-title{
+  display:flex;align-items:baseline;gap:12px;margin-bottom:20px;
+}
+.category-title h3{font-size:18px;}
+.category-title .count{font-size:12px;color:var(--graphite);font-family:'IBM Plex Mono',monospace;}
+
+.grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px;
+}
+.card{
+  border:0.5px solid var(--line-sand);border-radius:3px;background:#fff;
+  display:flex;flex-direction:column;overflow:hidden;transition:border-color .15s;
+}
+.card:hover{border-color:var(--ink);}
+.card-img{
+  aspect-ratio:1/1;background:var(--sand);display:flex;align-items:center;justify-content:center;
+  padding:18px;cursor:pointer;
+}
+.card-img img{max-height:100%;object-fit:contain;}
+.card-body{padding:16px 16px 18px;display:flex;flex-direction:column;gap:8px;flex:1;}
+.card-body .cat-label{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--petrol);font-family:'IBM Plex Mono',monospace;}
+.card-body h4{font-size:14.5px;font-weight:600;line-height:1.35;font-family:'Inter',sans-serif;cursor:pointer;}
+.card-body h4:hover{color:var(--petrol);}
+.card-body .desc{font-size:12.5px;color:var(--graphite);line-height:1.5;flex:1;}
+.card-footer{
+  display:flex;align-items:center;justify-content:space-between;margin-top:6px;
+}
+.price{font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:500;}
+.add-btn{
+  border:0.5px solid var(--ink);background:#fff;color:var(--ink);
+  padding:8px 14px;border-radius:2px;font-size:12.5px;font-weight:600;
+}
+.add-btn:hover{background:var(--ink);color:#fff;}
+.add-btn.added{background:var(--petrol);border-color:var(--petrol);color:#fff;}
+
+/* ---------- Why us ---------- */
+.why{background:var(--sand);padding:64px 0;margin-top:20px;}
+.why-inner{display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:center;}
+@media (max-width:800px){.why-inner{grid-template-columns:1fr;}}
+.why-photo{border-radius:3px;overflow:hidden;aspect-ratio:4/5;background:var(--line-sand);}
+.why-photo img{width:100%;height:100%;object-fit:cover;display:block;}
+.why-grid{display:grid;grid-template-columns:1fr;gap:28px;margin-top:32px;}
+.why-item .idx{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--graphite);margin-bottom:10px;}
+.why-item h4{font-size:16px;margin-bottom:8px;}
+.why-item p{font-size:13.5px;color:var(--graphite);line-height:1.6;}
+
+/* ---------- Footer ---------- */
+footer{background:var(--ink);color:#c9c7c2;padding:56px 0 28px;margin-top:20px;}
+.footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px;margin-bottom:40px;}
+@media (max-width:700px){.footer-grid{grid-template-columns:1fr;}}
+footer h5{color:#fff;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:16px;font-family:'IBM Plex Mono',monospace;font-weight:500;}
+footer .fbrand .name{color:#fff;font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:600;}
+footer .fbrand p{font-size:13px;line-height:1.6;margin-top:12px;max-width:280px;color:#a5a39d;}
+footer ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px;}
+footer ul li{font-size:13.5px;color:#c9c7c2;}
+.footer-bottom{border-top:0.5px solid rgba(255,255,255,0.15);padding-top:22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:12px;color:#8a8883;}
+
+/* ---------- Cart Drawer ---------- */
+.overlay{
+  position:fixed;inset:0;background:rgba(17,17,17,0.4);z-index:60;
+  opacity:0;pointer-events:none;transition:opacity .2s;
+}
+.overlay.open{opacity:1;pointer-events:auto;}
+.drawer{
+  position:fixed;top:0;right:0;bottom:0;width:min(420px,100%);
+  background:#fff;z-index:61;transform:translateX(100%);transition:transform .25s ease;
+  display:flex;flex-direction:column;
+}
+.drawer.open{transform:translateX(0);}
+.drawer-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:20px 24px;border-bottom:0.5px solid var(--line-sand);
+}
+.drawer-head h3{font-size:16px;}
+.close-x{border:none;background:none;font-size:20px;line-height:1;color:var(--graphite);padding:4px;}
+.close-x:hover{color:var(--ink);}
+.drawer-body{flex:1;overflow-y:auto;padding:16px 24px;}
+.cart-empty{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  height:100%;color:var(--graphite);font-size:13.5px;gap:12px;text-align:center;padding:40px 20px;
+}
+.cart-row{
+  display:flex;gap:12px;padding:16px 0;border-bottom:0.5px solid var(--line-sand);
+}
+.cart-row img{width:56px;height:56px;object-fit:contain;background:var(--sand);border-radius:2px;padding:6px;flex:none;}
+.cart-row-info{flex:1;display:flex;flex-direction:column;gap:6px;}
+.cart-row-info .nm{font-size:13px;font-weight:500;line-height:1.35;}
+.cart-row-info .bottom{display:flex;align-items:center;justify-content:space-between;}
+.qty-ctrl{display:flex;align-items:center;border:0.5px solid var(--line-sand);border-radius:2px;}
+.qty-ctrl button{width:26px;height:26px;border:none;background:none;font-size:14px;color:var(--ink);}
+.qty-ctrl button:hover{background:var(--sand);}
+.qty-ctrl span{width:24px;text-align:center;font-size:13px;font-family:'IBM Plex Mono',monospace;}
+.remove-link{font-size:11.5px;color:var(--graphite);text-decoration:underline;text-underline-offset:2px;}
+.remove-link:hover{color:var(--danger);}
+.row-price{font-family:'IBM Plex Mono',monospace;font-size:13px;}
+.drawer-foot{border-top:0.5px solid var(--line-sand);padding:20px 24px;}
+.sum-line{display:flex;justify-content:space-between;font-size:13.5px;margin-bottom:8px;color:var(--graphite);}
+.sum-line strong{color:var(--ink);}
+.sum-total{display:flex;justify-content:space-between;font-size:17px;font-weight:600;margin:14px 0 18px;font-family:'Space Grotesk',sans-serif;}
+.checkout-btn{
+  width:100%;padding:15px;background:var(--ink);color:#fff;border:none;border-radius:2px;
+  font-size:14px;font-weight:600;
+}
+.checkout-btn:hover{background:var(--petrol);}
+
+/* ---------- Product Modal ---------- */
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(17,17,17,0.5);z-index:70;
+  display:none;align-items:center;justify-content:center;padding:20px;
+}
+.modal-overlay.open{display:flex;}
+.pmodal{
+  background:#fff;max-width:760px;width:100%;max-height:88vh;overflow-y:auto;
+  display:grid;grid-template-columns:1fr 1fr;border-radius:3px;position:relative;
+}
+@media (max-width:640px){.pmodal{grid-template-columns:1fr;}}
+.pmodal-close{
+  position:absolute;top:14px;right:14px;background:#fff;border:0.5px solid var(--line-sand);
+  width:30px;height:30px;border-radius:50%;font-size:16px;color:var(--ink);z-index:2;
+}
+.pmodal-img{background:var(--sand);display:flex;align-items:center;justify-content:center;padding:32px;}
+.pmodal-body{padding:32px 28px;display:flex;flex-direction:column;}
+.pmodal-body .cat-label{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--petrol);font-family:'IBM Plex Mono',monospace;margin-bottom:10px;}
+.pmodal-body h3{font-size:21px;margin-bottom:14px;line-height:1.3;}
+.pmodal-body .desc{font-size:13.5px;color:var(--graphite);line-height:1.65;margin-bottom:22px;}
+.pmodal-body .price{font-size:24px;margin-bottom:20px;}
+.pmodal-qty{display:flex;align-items:center;gap:14px;margin-bottom:20px;}
+.pmodal-add{
+  padding:15px;background:var(--ink);color:#fff;border:none;border-radius:2px;font-size:14px;font-weight:600;
+}
+.pmodal-add:hover{background:var(--petrol);}
+.pmodal-add.added{background:var(--petrol);}
+
+/* ---------- Checkout ---------- */
+.checkout-screen{
+  position:fixed;inset:0;background:#fff;z-index:80;overflow-y:auto;
+  display:none;
+}
+.checkout-screen.open{display:block;}
+.co-head{
+  border-bottom:0.5px solid var(--line-sand);padding:18px 24px;
+  display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:#fff;z-index:2;
+}
+.co-back{font-size:13px;color:var(--graphite);display:flex;align-items:center;gap:6px;}
+.co-back:hover{color:var(--ink);}
+.co-wrap{max-width:920px;margin:0 auto;padding:40px 24px 100px;display:grid;grid-template-columns:1.3fr 1fr;gap:56px;}
+@media (max-width:760px){.co-wrap{grid-template-columns:1fr;}}
+
+.steps{display:flex;gap:0;margin-bottom:36px;}
+.step{display:flex;align-items:center;gap:10px;flex:1;}
+.step .n{
+  width:26px;height:26px;border-radius:50%;border:1px solid var(--line-sand);
+  display:flex;align-items:center;justify-content:center;font-size:12px;font-family:'IBM Plex Mono',monospace;color:var(--graphite);flex:none;
+}
+.step.active .n{background:var(--ink);border-color:var(--ink);color:#fff;}
+.step.done .n{background:var(--petrol);border-color:var(--petrol);color:#fff;}
+.step .lbl{font-size:12.5px;color:var(--graphite);}
+.step.active .lbl{color:var(--ink);font-weight:600;}
+.step-line{flex:1;height:0.5px;background:var(--line-sand);margin:0 8px;}
+
+.co-section{display:none;}
+.co-section.active{display:block;}
+.field-group{margin-bottom:20px;}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.field-row.three{grid-template-columns:1fr 1fr 1fr;}
+@media (max-width:500px){.field-row,.field-row.three{grid-template-columns:1fr;}}
+label{display:block;font-size:12.5px;color:var(--graphite);margin-bottom:6px;}
+input,select,textarea{
+  width:100%;padding:12px 14px;border:0.5px solid var(--line-sand);border-radius:2px;
+  font-size:14px;font-family:'Inter',sans-serif;background:#fff;color:var(--ink);
+}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--ink);}
+.error-msg{font-size:12px;color:var(--danger);margin-top:5px;display:none;}
+.field-group.error input,.field-group.error select{border-color:var(--danger);}
+.field-group.error .error-msg{display:block;}
+
+.pay-options{display:flex;gap:10px;margin-bottom:24px;flex-wrap:wrap;}
+.pay-opt{
+  flex:1;min-width:120px;border:0.5px solid var(--line-sand);border-radius:2px;padding:14px;
+  font-size:13px;text-align:center;
+}
+.pay-opt.selected{border-color:var(--ink);background:var(--sand);font-weight:600;}
+
+.step-actions{display:flex;justify-content:space-between;margin-top:32px;gap:12px;}
+.btn-back-step{border:0.5px solid var(--line-sand);background:#fff;padding:13px 22px;border-radius:2px;font-size:13.5px;color:var(--graphite);}
+.btn-next-step{background:var(--ink);color:#fff;border:none;padding:13px 26px;border-radius:2px;font-size:13.5px;font-weight:600;flex:1;}
+.btn-next-step:hover{background:var(--petrol);}
+
+.co-summary{background:var(--sand);border-radius:3px;padding:24px;height:fit-content;position:sticky;top:90px;}
+.co-summary h4{font-size:14px;margin-bottom:16px;}
+.co-item{display:flex;gap:10px;padding:10px 0;border-bottom:0.5px solid var(--line-sand);font-size:12.5px;}
+.co-item img{width:40px;height:40px;object-fit:contain;background:#fff;border-radius:2px;padding:4px;flex:none;}
+.co-item .nm{flex:1;line-height:1.4;}
+.co-item .p{font-family:'IBM Plex Mono',monospace;white-space:nowrap;}
+.co-sum-line{display:flex;justify-content:space-between;font-size:13px;margin-top:14px;color:var(--graphite);}
+.co-sum-total{display:flex;justify-content:space-between;font-size:18px;font-weight:600;margin-top:14px;padding-top:14px;border-top:0.5px solid var(--line-sand);font-family:'Space Grotesk',sans-serif;}
+
+.confirm-screen{text-align:center;padding:80px 24px;max-width:520px;margin:0 auto;}
+.confirm-icon{
+  width:64px;height:64px;border-radius:50%;background:var(--petrol);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 24px;
+}
+.confirm-screen h2{font-size:24px;margin-bottom:12px;}
+.confirm-screen p{color:var(--graphite);font-size:14px;line-height:1.6;margin-bottom:8px;}
+.confirm-order-id{font-family:'IBM Plex Mono',monospace;font-size:13px;background:var(--sand);padding:10px 16px;border-radius:2px;display:inline-block;margin:16px 0 28px;}
+
+.toast{
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);
+  background:var(--ink);color:#fff;padding:12px 22px;border-radius:2px;font-size:13px;
+  z-index:90;opacity:0;transition:all .25s;pointer-events:none;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+@media (max-width:640px){
+  nav{gap:14px;}
+  nav .navlink{display:none;}
+  .hero{padding:64px 0 48px;}
+  .hero-stats{gap:24px;}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header>
+  <div class="header-inner">
+    <div class="brand">
+      <div class="brand-mark"><span>LN</span></div>
+      <div class="brand-text">
+        <div class="name">LN EXPRESS</div>
+        <div class="sub">Produtos de piscina</div>
+      </div>
+    </div>
+    <nav>
+      <a class="navlink" href="#catalogo">Produtos</a>
+      <a class="navlink" href="#porque">Como funciona</a>
+      <div class="free-pill">Frete grátis · Litoral Norte</div>
+      <button class="cart-btn" onclick="openCart()">
+        Carrinho <span class="cart-count" id="cartCount">0</span>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="wrap">
+    <div class="hero-eyebrow">Praia do Forte · Guarajuba · Sauípe · Imbassaí · Interlagos · Itacimirim</div>
+    <h1>Adquira os produtos para sua piscina, <em>direto</em> com a LN Express.</h1>
+    <p class="lead">Sem sair de casa, sem depender da loja física. Compre online, com os melhores preços da região, e receba no seu endereço — entrega gratuita em toda a região do Litoral Norte da Bahia.</p>
+    <div class="hero-ctas">
+      <a class="btn btn-primary" href="#catalogo">Ver produtos</a>
+      <a class="btn btn-ghost" href="#porque">Como funciona</a>
+    </div>
+    <div class="hero-stats">
+      <div><div class="num">20</div><div class="lbl">produtos selecionados</div></div>
+      <div><div class="num">100%</div><div class="lbl">frete grátis na região</div></div>
+      <div><div class="num">6</div><div class="lbl">categorias técnicas</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GALLERY ============ -->
+<section class="gallery wrap">
+  <div class="waterline"><span>No litoral norte</span></div>
+  <h2 style="font-size:26px;">Água tratada com o cuidado que sua piscina merece</h2>
+  <div class="gallery-grid">
+    <div class="gallery-item g1">
+      <img src="images/gal5.png" alt="Piscineiro realizando manutenção em piscina de resort">
+      <div class="cap">Manutenção em piscinas de todos os portes</div>
+    </div>
+    <div class="gallery-item">
+      <img src="images/gal1.png" alt="Aplicação de produto químico em piscina residencial">
+      <div class="cap">Aplicação com técnica e cuidado</div>
+    </div>
+    <div class="gallery-item">
+      <img src="images/gal2.png" alt="Limpeza de piscina em residência de alto padrão">
+      <div class="cap">Água sempre cristalina</div>
+    </div>
+    <div class="gallery-item">
+      <img src="images/gal3.png" alt="Piscineiro trabalhando em piscina residencial no litoral norte">
+    </div>
+    <div class="gallery-item">
+      <img src="images/gal4.png" alt="Manutenção de piscina residencial ao entardecer">
+    </div>
+  </div>
+</section>
+
+<div class="deliver-band">
+  <div class="wrap">
+    <span>Entregamos <strong>grátis</strong> em todo o Litoral Norte</span>
+    <span class="dot"></span>
+    <span>Praia do Forte</span>
+    <span class="dot"></span>
+    <span>Guarajuba</span>
+    <span class="dot"></span>
+    <span>Costa do Sauípe</span>
+    <span class="dot"></span>
+    <span>Imbassaí</span>
+    <span class="dot"></span>
+    <span>Interlagos</span>
+    <span class="dot"></span>
+    <span>Itacimirim</span>
+  </div>
+</div>
+
+<!-- ============ CATALOG ============ -->
+<section class="catalog wrap" id="catalogo">
+  <div class="waterline"><span>Catálogo</span></div>
+  <div class="catalog-head">
+    <h2>Produtos para sua piscina</h2>
+    <p>Linha completa de manutenção — do cloro aos testes de água, com a qualidade que sua piscina precisa.</p>
+  </div>
+
+  <div class="filters" id="filters"></div>
+  <div id="catalogContent"></div>
+</section>
+
+<!-- ============ WHY US ============ -->
+<section class="why" id="porque">
+  <div class="wrap">
+    <div class="why-inner">
+      <div>
+        <div class="waterline"><span>Como funciona</span></div>
+        <h2 style="font-size:28px;">Simples do pedido à sua porta</h2>
+        <div class="why-grid">
+          <div class="why-item">
+            <div class="idx">01</div>
+            <h4>Escolha os produtos</h4>
+            <p>Navegue pelo catálogo, adicione ao carrinho o que sua piscina precisa nesse mês.</p>
+          </div>
+          <div class="why-item">
+            <div class="idx">02</div>
+            <h4>Finalize o pedido</h4>
+            <p>Informe seu endereço e forma de pagamento em um checkout rápido, feito para o celular.</p>
+          </div>
+          <div class="why-item">
+            <div class="idx">03</div>
+            <h4>Receba em casa</h4>
+            <p>Entrega gratuita em toda a região do Litoral Norte — sem taxa extra, sem complicação.</p>
+          </div>
+        </div>
+      </div>
+      <div class="why-photo">
+        <img src="images/gal2.png" alt="Manutenção profissional de piscina residencial">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="fbrand">
+        <div class="name">LN EXPRESS</div>
+        <p>LN Express — produtos químicos e insumos para piscina, com foco no Litoral Norte da Bahia. Entrega gratuita direto no seu endereço.</p>
+      </div>
+      <div>
+        <h5>Atendemos</h5>
+        <ul>
+          <li>Praia do Forte</li>
+          <li>Guarajuba</li>
+          <li>Costa do Sauípe</li>
+          <li>Imbassaí</li>
+          <li>Interlagos</li>
+          <li>Itacimirim</li>
+        </ul>
+      </div>
+      <div>
+        <h5>Contato</h5>
+        <ul>
+          <li>contato@lndistribuidora.com.br</li>
+          <li>WhatsApp: (71) 98196-4920</li>
+          <li>Seg a sáb · 8h às 18h</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 LN Express · Produtos de piscina</span>
+      <span>CNPJ 00.000.000/0001-00</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ CART DRAWER ============ -->
+<div class="overlay" id="overlay" onclick="closeAllOverlays()"></div>
+<div class="drawer" id="cartDrawer">
+  <div class="drawer-head">
+    <h3>Seu carrinho</h3>
+    <button class="close-x" onclick="closeCart()">&times;</button>
+  </div>
+  <div class="drawer-body" id="drawerBody"></div>
+  <div class="drawer-foot" id="drawerFoot" style="display:none;">
+    <div class="coupon-box" style="margin-bottom:14px;">
+      <div style="display:flex;gap:8px;">
+        <input type="text" id="cartCouponInput" placeholder="Cupom de desconto" style="flex:1;padding:9px 12px;border:0.5px solid var(--line-sand);border-radius:2px;font-size:12.5px;text-transform:uppercase;">
+        <button onclick="applyCouponFrom('cart')" style="padding:9px 14px;border:0.5px solid var(--ink);background:#fff;border-radius:2px;font-size:12.5px;font-weight:600;">Aplicar</button>
+      </div>
+      <div id="cartCouponMsg" style="font-size:11.5px;margin-top:6px;"></div>
+    </div>
+    <div class="sum-line"><span>Subtotal</span><strong id="cartSubtotal">R$ 0,00</strong></div>
+    <div class="sum-line" id="cartDiscountLine" style="display:none;"><span>Desconto</span><strong id="cartDiscount" style="color:var(--petrol);">- R$ 0,00</strong></div>
+    <div class="sum-line"><span>Frete</span><strong id="cartFrete" style="color:var(--petrol);">Grátis</strong></div>
+    <div class="sum-total"><span>Total</span><span id="cartTotal">R$ 0,00</span></div>
+    <div id="cartFreteHint" style="font-size:11.5px;color:var(--graphite);margin:-10px 0 14px;line-height:1.5;"></div>
+    <button class="checkout-btn" onclick="goToCheckout()">Finalizar compra</button>
+  </div>
+</div>
+
+<!-- ============ PRODUCT MODAL ============ -->
+<div class="modal-overlay" id="pmodalOverlay" onclick="if(event.target===this)closeProductModal()">
+  <div class="pmodal">
+    <button class="pmodal-close" onclick="closeProductModal()">&times;</button>
+    <div class="pmodal-img"><img id="pmodalImg" src="" alt=""></div>
+    <div class="pmodal-body">
+      <div class="cat-label" id="pmodalCat"></div>
+      <h3 id="pmodalName"></h3>
+      <p class="desc" id="pmodalDesc"></p>
+      <div class="price" id="pmodalPrice"></div>
+      <div class="pmodal-qty">
+        <div class="qty-ctrl">
+          <button onclick="changeModalQty(-1)">&minus;</button>
+          <span id="pmodalQty">1</span>
+          <button onclick="changeModalQty(1)">+</button>
+        </div>
+      </div>
+      <button class="pmodal-add" id="pmodalAddBtn" onclick="addModalToCart()">Adicionar ao carrinho</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ CHECKOUT SCREEN ============ -->
+<div class="checkout-screen" id="checkoutScreen">
+  <div class="co-head">
+    <button class="co-back" onclick="closeCheckout()">&larr; Voltar à loja</button>
+    <div class="brand-text" style="text-align:right;">
+      <div class="name" style="font-size:13px;">LN EXPRESS</div>
+    </div>
+  </div>
+
+  <div id="checkoutMain">
+    <div class="co-wrap">
+      <div>
+        <div class="steps" id="stepsBar"></div>
+
+        <!-- Step 1: Contact -->
+        <div class="co-section active" id="step1">
+          <h3 style="font-size:18px;margin-bottom:20px;">Dados de contato</h3>
+          <div class="field-group" id="fg-nome">
+            <label>Nome completo</label>
+            <input type="text" id="inpNome" placeholder="Seu nome completo">
+            <div class="error-msg">Informe seu nome completo.</div>
+          </div>
+          <div class="field-row">
+            <div class="field-group" id="fg-email">
+              <label>E-mail</label>
+              <input type="email" id="inpEmail" placeholder="voce@email.com">
+              <div class="error-msg">Informe um e-mail válido.</div>
+            </div>
+            <div class="field-group" id="fg-telefone">
+              <label>Telefone / WhatsApp</label>
+              <input type="text" id="inpTelefone" placeholder="(71) 98196-4920">
+              <div class="error-msg">Informe um telefone válido.</div>
+            </div>
+          </div>
+          <div class="field-group" id="fg-cpf">
+            <label>CPF ou CNPJ</label>
+            <input type="text" id="inpCpf" placeholder="000.000.000-00">
+            <div style="font-size:11.5px;color:var(--graphite);margin-top:5px;">Necessário para emissão da nota e para pagamentos via Pix.</div>
+            <div class="error-msg">Informe um CPF ou CNPJ válido.</div>
+          </div>
+          <div class="step-actions">
+            <span></span>
+            <button class="btn-next-step" onclick="validateStep1()">Continuar para entrega</button>
+          </div>
+        </div>
+
+        <!-- Step 2: Address -->
+        <div class="co-section" id="step2">
+          <h3 style="font-size:18px;margin-bottom:8px;">Endereço de entrega</h3>
+          <p style="font-size:12.5px;color:var(--graphite);line-height:1.6;margin:0 0 20px;">
+            Entregamos apenas em Praia do Forte, Guarajuba, Costa do Sauípe, Imbassaí, Interlagos e Itacimirim.
+            Frete grátis em pedidos acima de R$ 200. Abaixo disso, a entrega custa R$ 50 para Praia do Forte
+            ou R$ 70 para as demais localidades. Prazo de entrega: até 72 horas úteis.
+          </p>
+          <div class="field-row">
+            <div class="field-group" id="fg-cep" style="grid-column:1/2;">
+              <label>CEP</label>
+              <input type="text" id="inpCep" placeholder="48.280-000">
+              <div class="error-msg" id="errCep">Informe o CEP.</div>
+            </div>
+            <div class="field-group" id="fg-cidade">
+              <label>Cidade / Localidade</label>
+              <select id="inpCidade" onchange="renderCheckoutSummary()">
+                <option value="">Selecione</option>
+                <option>Praia do Forte</option>
+                <option>Guarajuba</option>
+                <option>Costa do Sauípe</option>
+                <option>Imbassaí</option>
+                <option>Interlagos</option>
+                <option>Itacimirim</option>
+                <option>Outra localidade do Litoral Norte</option>
+              </select>
+              <div class="error-msg">Selecione a localidade.</div>
+            </div>
+          </div>
+          <div class="field-row three">
+            <div class="field-group" id="fg-rua" style="grid-column:1/3;">
+              <label>Rua / Loteamento</label>
+              <input type="text" id="inpRua" placeholder="Ex: Lot. Aldeia dos Pescadores">
+              <div class="error-msg">Informe o endereço.</div>
+            </div>
+            <div class="field-group" id="fg-numero">
+              <label>Número / Lote</label>
+              <input type="text" id="inpNumero" placeholder="S/N, lote 7/8">
+              <div class="error-msg">Informe o número.</div>
+            </div>
+          </div>
+          <div class="field-group" id="fg-bairro">
+            <label>Bairro</label>
+            <input type="text" id="inpBairro" placeholder="Bairro">
+            <div class="error-msg">Informe o bairro.</div>
+          </div>
+          <div class="field-group" id="fg-piscineiro">
+            <label>Profissional ou empresa que cuida da sua piscina</label>
+            <input type="text" id="inpPiscineiro" placeholder="Nome do piscineiro ou empresa responsável">
+            <div style="font-size:11.5px;color:var(--graphite);margin-top:5px;">Perguntamos isso visando agilizar a entrega.</div>
+            <div class="error-msg">Informe o profissional ou empresa responsável pela sua piscina.</div>
+          </div>
+          <div class="field-group">
+            <label>Ponto de referência (opcional)</label>
+            <input type="text" id="inpRef" placeholder="Ex: próximo à praça central, casa de portão azul">
+          </div>
+          <div class="step-actions">
+            <button class="btn-back-step" onclick="goStep(1)">Voltar</button>
+            <button class="btn-next-step" onclick="validateStep2()">Continuar para pagamento</button>
+          </div>
+        </div>
+
+        <!-- Step 3: Payment -->
+        <div class="co-section" id="step3">
+          <h3 style="font-size:18px;margin-bottom:20px;">Forma de pagamento</h3>
+          <div class="pay-options" id="payOptions">
+            <div class="pay-opt selected" data-pay="pix" onclick="selectPay('pix')">Pix</div>
+            <div class="pay-opt" data-pay="cartao" onclick="selectPay('cartao')">Cartão de crédito</div>
+            <div class="pay-opt" data-pay="entrega" onclick="selectPay('entrega')">Na entrega</div>
+          </div>
+          <div id="cardFields" style="display:none;">
+            <div class="field-group" id="fg-cardnum">
+              <label>Número do cartão</label>
+              <input type="text" id="inpCardNum" placeholder="0000 0000 0000 0000">
+              <div class="error-msg">Informe o número do cartão.</div>
+            </div>
+            <div class="field-row">
+              <div class="field-group" id="fg-cardval">
+                <label>Validade</label>
+                <input type="text" id="inpCardVal" placeholder="MM/AA">
+                <div class="error-msg">Informe a validade.</div>
+              </div>
+              <div class="field-group" id="fg-cardcvv">
+                <label>CVV</label>
+                <input type="text" id="inpCardCvv" placeholder="123">
+                <div class="error-msg">Informe o CVV.</div>
+              </div>
+            </div>
+          </div>
+          <div class="step-actions">
+            <button class="btn-back-step" onclick="goStep(2)">Voltar</button>
+            <button class="btn-next-step" onclick="validateStep3()">Revisar pedido</button>
+          </div>
+        </div>
+
+        <!-- Step 4: Review -->
+        <div class="co-section" id="step4">
+          <h3 style="font-size:18px;margin-bottom:20px;">Revisar e confirmar</h3>
+          <div style="border:0.5px solid var(--line-sand);border-radius:2px;padding:18px;margin-bottom:16px;">
+            <div style="font-size:12px;color:var(--graphite);margin-bottom:6px;">CONTATO</div>
+            <div style="font-size:13.5px;margin-bottom:2px;" id="reviewNome"></div>
+            <div style="font-size:13px;color:var(--graphite);" id="reviewContato"></div>
+          </div>
+          <div style="border:0.5px solid var(--line-sand);border-radius:2px;padding:18px;margin-bottom:16px;">
+            <div style="font-size:12px;color:var(--graphite);margin-bottom:6px;">ENTREGA</div>
+            <div style="font-size:13.5px;line-height:1.6;" id="reviewEndereco"></div>
+          </div>
+          <div style="border:0.5px solid var(--line-sand);border-radius:2px;padding:18px;margin-bottom:24px;">
+            <div style="font-size:12px;color:var(--graphite);margin-bottom:6px;">PAGAMENTO</div>
+            <div style="font-size:13.5px;" id="reviewPagamento"></div>
+          </div>
+          <div class="step-actions">
+            <button class="btn-back-step" onclick="goStep(3)">Voltar</button>
+            <button class="btn-next-step" onclick="confirmOrder()">Confirmar pedido</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="co-summary">
+        <h4>Resumo do pedido</h4>
+        <div id="coItemsList"></div>
+        <div class="coupon-box" style="margin:14px 0;">
+          <div style="display:flex;gap:8px;">
+            <input type="text" id="coCouponInput" placeholder="Cupom de desconto" style="flex:1;padding:9px 12px;border:0.5px solid var(--line-sand);border-radius:2px;font-size:12.5px;text-transform:uppercase;background:#fff;">
+            <button onclick="applyCouponFrom('co')" style="padding:9px 14px;border:0.5px solid var(--ink);background:#fff;border-radius:2px;font-size:12.5px;font-weight:600;">Aplicar</button>
+          </div>
+          <div id="coCouponMsg" style="font-size:11.5px;margin-top:6px;"></div>
+        </div>
+        <div class="co-sum-line"><span>Subtotal</span><span id="coSubtotal">R$ 0,00</span></div>
+        <div class="co-sum-line" id="coDiscountLine" style="display:none;"><span>Desconto</span><span id="coDiscount" style="color:var(--petrol);">- R$ 0,00</span></div>
+        <div class="co-sum-line"><span>Frete</span><span id="coFrete" style="color:var(--petrol);">Grátis</span></div>
+        <div class="co-sum-total"><span>Total</span><span id="coTotal">R$ 0,00</span></div>
+        <div id="coFreteHint" style="font-size:11.5px;color:var(--graphite);margin-top:10px;line-height:1.5;"></div>
+        <div style="font-size:11.5px;color:var(--graphite);margin-top:10px;line-height:1.5;border-top:0.5px solid var(--line-sand);padding-top:10px;">Entrega em até 72 horas úteis.</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="pixWaitScreen" style="display:none;">
+    <div class="confirm-screen">
+      <h2 style="margin-bottom:6px;">Pague com Pix para confirmar</h2>
+      <p style="margin-bottom:20px;">Escaneie o QR Code ou copie o código abaixo no app do seu banco.</p>
+      <div id="pixLoading" style="padding:30px 0;color:var(--graphite);font-size:13.5px;">Gerando cobrança Pix…</div>
+      <div id="pixContent" style="display:none;">
+        <img id="pixQrImg" src="" alt="QR Code Pix" style="width:220px;height:220px;margin:0 auto 18px;display:block;border:1px solid var(--line-sand);border-radius:4px;">
+        <div style="background:var(--sand);border-radius:4px;padding:12px;font-family:'IBM Plex Mono',monospace;font-size:11px;word-break:break-all;margin-bottom:12px;" id="pixCopyPaste"></div>
+        <button class="btn btn-primary" style="background:var(--ink);color:#fff;width:100%;justify-content:center;margin-bottom:14px;" onclick="copyPixCode()">Copiar código Pix</button>
+        <div style="font-size:12.5px;color:var(--graphite);" id="pixStatusMsg">Aguardando confirmação do pagamento…</div>
+      </div>
+      <div id="pixErrorBox" style="display:none;color:var(--danger);font-size:13.5px;margin-top:14px;"></div>
+    </div>
+  </div>
+
+  <div id="confirmScreen" style="display:none;">
+    <div class="confirm-screen">
+      <div class="confirm-icon">&check;</div>
+      <h2>Pedido recebido!</h2>
+      <p>Obrigado por comprar com a LN Express. Seu pedido já está sendo preparado.</p>
+      <div class="confirm-order-id" id="orderIdDisplay"></div>
+      <p>Enviaremos a confirmação por e-mail e combinaremos a entrega pelo WhatsApp informado. Prazo de entrega: em até 72 horas úteis.</p>
+      <a class="btn btn-primary" style="background:var(--ink);color:#fff;margin-top:20px;" href="#" onclick="backToStore();return false;">Voltar à loja</a>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ========== PRODUCT DATA ========== */
+const products = [
+  {id:1, cat:"Cloro e desinfecção", img:"images/p01.png", name:"Hipoclorito de Cálcio 70% - Balde 10kg", desc:"Cloro granulado de alta concentração (70%), ideal para desinfecção e choque de cloro em piscinas. Alta potência, dissolução rápida.", price:340.00},
+  {id:3, cat:"Cloro e desinfecção", img:"images/p03.png", name:"Dicloro Orgânico 56% - Balde 10kg", desc:"Cloro orgânico concentrado (56% de cloro ativo, dicloroisocianurato de sódio), alta concentração e ação prolongada. Ideal para manutenção contínua da piscina.", price:229.90},
+  {id:4, cat:"Cloro e desinfecção", img:"images/p04.png", name:"Cloro Multiação 45% - Balde 10kg", desc:"Cloro multiação com 45% de cloro ativo, o original. Além de desinfetar, atua como estabilizador de pH, estabilizador de alcalinidade, fungicida, oxidante, algicida e clarificante.", price:219.90},
+  {id:18, cat:"Cloro e desinfecção", img:"images/p18.png", name:"Pastilha Premium Tricloro 200g", desc:"Pastilha de tricloro estabilizado com 90% de cloro ativo, ação prolongada. Desinfecção contínua e eficaz da água da piscina.", price:14.90},
+
+  {id:5, cat:"Algicidas", img:"images/p05.png", name:"Algicida Multiação 1L", desc:"Algicida de ação múltipla, sem cobre, indicado tanto para manutenção preventiva quanto para choque contra algas. Maior rendimento e economia.", price:39.90},
+  {id:6, cat:"Algicidas", img:"images/p06.png", name:"Algicida Manutenção 1L", desc:"Algicida de uso preventivo e contínuo, previne a formação de água verde e mantém a piscina protegida contra algas.", price:27.90},
+  {id:7, cat:"Algicidas", img:"images/p07.png", name:"Algicida de Choque 1L", desc:"Algicida concentrado de ação rápida, indicado para eliminar algas já instaladas na piscina. Ideal para tratamento de choque.", price:42.90},
+
+  {id:8, cat:"Clarificantes e decantadores", img:"images/p08.png", name:"Floc Plus 2 em 1 - Clarificante e Decantador 1L", desc:"Produto concentrado 2 em 1, une ação clarificante e decantadora. Elimina partículas em suspensão, deixando a água cristalina.", price:24.90},
+  {id:9, cat:"Clarificantes e decantadores", img:"images/p09.png", name:"Floc Gel 90g - Blister com 4 cubos", desc:"Clarificante em cubos, prático e moderno. Um blister trata até 30.000 litros de água por até 30 dias.", price:34.90},
+  {id:10, cat:"Clarificantes e decantadores", img:"images/p10.png", name:"Sulfato de Alumínio 2kg", desc:"Decantador 100% puro, isento de ferro, indicado para decantar impurezas e partículas em suspensão na água.", price:29.90},
+
+  {id:14, cat:"Corretores de pH e alcalinidade", img:"images/p14.png", name:"Elevador de pH 1L", desc:"Corrige o pH da água quando está baixo (ácido), restabelecendo o equilíbrio ideal para conforto do banhista.", price:29.90},
+  {id:15, cat:"Corretores de pH e alcalinidade", img:"images/p15.png", name:"Diminuidor de pH e Alcalinidade 1L", desc:"Produto concentrado que corrige simultaneamente o pH e a alcalinidade da água quando estão elevados.", price:24.90},
+  {id:16, cat:"Corretores de pH e alcalinidade", img:"images/p16.png", name:"Elevador de Alcalinidade 2kg (Bicarbonato de Sódio)", desc:"100% puro, eleva a alcalinidade e estabiliza o pH da água, prevenindo irritação nos olhos e na pele.", price:24.90},
+  {id:17, cat:"Corretores de pH e alcalinidade", img:"images/p17.png", name:"Barrilha - Elevador de pH 2kg", desc:"100% pura, eleva o pH da água, prevenindo a corrosão de equipamentos metálicos e água mais agradável.", price:27.90},
+
+  {id:11, cat:"Auxiliares e manutenção", img:"images/p11.png", name:"Eliminador de Oleosidade 1L", desc:"Remove resíduos de protetor solar, óleos e cosméticos da água, aumentando o rendimento do cloro.", price:49.90},
+  {id:12, cat:"Auxiliares e manutenção", img:"images/p12.png", name:"Controlador de Metais 1L", desc:"Remove metais, manchas e incrustações da água, ideal para piscinas abastecidas com água de poço.", price:64.90},
+  {id:13, cat:"Auxiliares e manutenção", img:"images/p13.png", name:"Limpa Bordas 1L", desc:"Produto concentrado que remove gorduras e sujeiras acumuladas nas bordas e na linha d'água da piscina.", price:27.90},
+
+  {id:19, cat:"Testes e kits", img:"images/p19.png", name:"Fita Teste Aquachek 50 tiras", desc:"Teste rápido e preciso (resultado em 15 segundos) para cloro livre, pH, alcalinidade total e ácido cianúrico.", price:79.90},
+  {id:20, cat:"Testes e kits", img:"images/p20.png", name:"Kit Teste Aquachek pH e Cloro", desc:"Kit completo para análise de cloro e pH da água por comparação de cores, com reagentes líquidos e estojo comparador.", price:59.90},
+  {id:21, cat:"Testes e kits", img:"images/p21.png", name:"Kit Análise de Alcalinidade Total", desc:"Kit para medição precisa da alcalinidade total da água, com solução indicadora, titulante e proveta de 25ml.", price:46.90},
+];
+
+const categories = [...new Set(products.map(p=>p.cat))];
+let activeFilter = "Todos";
+let cart = {}; // id -> qty
+let modalProduct = null;
+let modalQty = 1;
+let selectedPayment = "pix";
+
+function fmt(n){
+  return "R$ " + n.toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2});
+}
+
+/* ========== RENDER CATALOG ========== */
+function renderFilters(){
+  const el = document.getElementById('filters');
+  const all = ["Todos", ...categories];
+  el.innerHTML = all.map(c => `<button class="filter-chip ${c===activeFilter?'active':''}" onclick="setFilter('${c.replace(/'/g,"\\'")}')">${c}</button>`).join('');
+}
+
+function setFilter(c){
+  activeFilter = c;
+  renderFilters();
+  renderCatalog();
+}
+
+function renderCatalog(){
+  const el = document.getElementById('catalogContent');
+  const cats = activeFilter === "Todos" ? categories : [activeFilter];
+  el.innerHTML = cats.map(cat => {
+    const items = products.filter(p=>p.cat===cat);
+    return `
+      <div class="category-block">
+        <div class="category-title">
+          <h3>${cat}</h3>
+          <span class="count">${items.length} ${items.length===1?'item':'itens'}</span>
+        </div>
+        <div class="grid">
+          ${items.map(p => productCard(p)).join('')}
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function productCard(p){
+  return `
+    <div class="card">
+      <div class="card-img" onclick="openProductModal(${p.id})"><img src="${p.img}" alt="${p.name}"></div>
+      <div class="card-body">
+        <div class="cat-label">${p.cat}</div>
+        <h4 onclick="openProductModal(${p.id})">${p.name}</h4>
+        <div class="desc">${p.desc}</div>
+        <div class="card-footer">
+          <span class="price">${fmt(p.price)}</span>
+          <button class="add-btn" id="addbtn-${p.id}" onclick="quickAdd(${p.id})">Adicionar</button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function quickAdd(id){
+  cart[id] = (cart[id]||0) + 1;
+  updateCartUI();
+  const btn = document.getElementById('addbtn-'+id);
+  btn.textContent = "Adicionado";
+  btn.classList.add('added');
+  setTimeout(()=>{btn.textContent="Adicionar";btn.classList.remove('added');}, 1200);
+  showToast("Produto adicionado ao carrinho");
+}
+
+/* ========== PRODUCT MODAL ========== */
+function openProductModal(id){
+  modalProduct = products.find(p=>p.id===id);
+  modalQty = 1;
+  document.getElementById('pmodalImg').src = modalProduct.img;
+  document.getElementById('pmodalImg').alt = modalProduct.name;
+  document.getElementById('pmodalCat').textContent = modalProduct.cat;
+  document.getElementById('pmodalName').textContent = modalProduct.name;
+  document.getElementById('pmodalDesc').textContent = modalProduct.desc;
+  document.getElementById('pmodalPrice').textContent = fmt(modalProduct.price);
+  document.getElementById('pmodalQty').textContent = modalQty;
+  document.getElementById('pmodalAddBtn').textContent = "Adicionar ao carrinho";
+  document.getElementById('pmodalAddBtn').classList.remove('added');
+  document.getElementById('pmodalOverlay').classList.add('open');
+}
+function closeProductModal(){
+  document.getElementById('pmodalOverlay').classList.remove('open');
+}
+function changeModalQty(delta){
+  modalQty = Math.max(1, modalQty + delta);
+  document.getElementById('pmodalQty').textContent = modalQty;
+}
+function addModalToCart(){
+  cart[modalProduct.id] = (cart[modalProduct.id]||0) + modalQty;
+  updateCartUI();
+  const btn = document.getElementById('pmodalAddBtn');
+  btn.textContent = "Adicionado ✓";
+  btn.classList.add('added');
+  showToast(modalQty + "x " + modalProduct.name + " adicionado ao carrinho");
+  setTimeout(closeProductModal, 700);
+}
+
+/* ========== DELIVERY AREA & SHIPPING RULES ========== */
+const FREE_SHIPPING_MIN = 200;
+const SHIPPING_FEE_PRAIA_DO_FORTE = 50;
+const SHIPPING_FEE_OUTROS = 70;
+
+// Real CEP ranges for the served localities (Mata de São João covers
+// Praia do Forte, Costa do Sauípe and Imbassaí; Camaçari covers Guarajuba,
+// Itacimirim and Interlagos).
+const CEP_RANGES = [
+  [48280000, 48289999], // Praia do Forte / Costa do Sauípe / Imbassaí (Mata de São João)
+  [42840310, 42840594], // Guarajuba
+  [42840660, 42840850], // Itacimirim
+  [42829320, 42829900], // Interlagos
+];
+
+function cepInDeliveryArea(cepRaw){
+  const digits = (cepRaw || "").replace(/\D/g, "");
+  if(digits.length !== 8) return false;
+  const n = parseInt(digits, 10);
+  return CEP_RANGES.some(([min,max]) => n >= min && n <= max);
+}
+
+// Returns the shipping fee for a below-threshold order. `cidade` is the
+// locality chosen at checkout (from the address step's dropdown); it is
+// unknown while the person is still browsing the cart, in which case this
+// returns null so the UI can show "a calcular no checkout" instead of a
+// wrong number.
+function shippingFeeForCity(cidade){
+  if(!cidade) return null;
+  return cidade === "Praia do Forte" ? SHIPPING_FEE_PRAIA_DO_FORTE : SHIPPING_FEE_OUTROS;
+}
+
+function shippingCost(subtotal, cidade){
+  if(subtotal >= FREE_SHIPPING_MIN) return 0;
+  return shippingFeeForCity(cidade);
+}
+
+/* ========== COUPONS ========== */
+// Cupons de demonstração — troque pelos códigos e valores reais quando definidos.
+const COUPONS = {
+  "BEMVINDO10": { type: "percent", value: 10, label: "10% de desconto" },
+  "LN20": { type: "fixed", value: 20, label: "R$ 20,00 de desconto" },
+  "TESTE90": { type: "percent", value: 90, label: "90% de desconto" },
+};
+let appliedCoupon = null; // { code, type, value, label }
+
+function couponDiscountAmount(subtotal){
+  if(!appliedCoupon) return 0;
+  const raw = appliedCoupon.type === "percent"
+    ? subtotal * appliedCoupon.value / 100
+    : appliedCoupon.value;
+  return Math.min(raw, subtotal);
+}
+
+function applyCouponFrom(source){
+  const inputId = source === 'cart' ? 'cartCouponInput' : 'coCouponInput';
+  const msgId = source === 'cart' ? 'cartCouponMsg' : 'coCouponMsg';
+  const raw = document.getElementById(inputId).value.trim().toUpperCase();
+  const msgEl = document.getElementById(msgId);
+
+  if(!raw){
+    appliedCoupon = null;
+    msgEl.textContent = "";
+    msgEl.style.color = "var(--graphite)";
+  } else if(COUPONS[raw]){
+    appliedCoupon = { code: raw, ...COUPONS[raw] };
+    msgEl.textContent = `Cupom aplicado: ${appliedCoupon.label}`;
+    msgEl.style.color = "var(--petrol)";
+  } else {
+    appliedCoupon = null;
+    msgEl.textContent = "Cupom inválido.";
+    msgEl.style.color = "var(--danger)";
+  }
+
+  // Keep both coupon inputs (cart drawer and checkout summary) in sync
+  ['cartCouponInput','coCouponInput'].forEach(id=>{
+    const el = document.getElementById(id);
+    if(el && el.id !== inputId) el.value = raw;
+  });
+  ['cartCouponMsg','coCouponMsg'].forEach(id=>{
+    const el = document.getElementById(id);
+    if(el && el.id !== msgId) { el.textContent = msgEl.textContent; el.style.color = msgEl.style.color; }
+  });
+
+  updateCartUI();
+  if(document.getElementById('checkoutScreen').classList.contains('open')) renderCheckoutSummary();
+}
+
+/* ========== CART ========== */
+function cartItems(){
+  return Object.entries(cart).filter(([id,qty])=>qty>0).map(([id,qty])=>{
+    const p = products.find(pr=>pr.id===parseInt(id));
+    return {...p, qty};
+  });
+}
+function cartSubtotal(){
+  return cartItems().reduce((sum,it)=>sum + it.price*it.qty, 0);
+}
+function updateCartUI(){
+  const items = cartItems();
+  const count = items.reduce((s,i)=>s+i.qty,0);
+  document.getElementById('cartCount').textContent = count;
+
+  const body = document.getElementById('drawerBody');
+  const foot = document.getElementById('drawerFoot');
+  if(items.length===0){
+    body.innerHTML = `<div class="cart-empty">
+      <div style="font-size:32px;">🛒</div>
+      <div>Seu carrinho está vazio.<br>Adicione produtos para começar seu pedido.</div>
+    </div>`;
+    foot.style.display = "none";
+  } else {
+    body.innerHTML = items.map(it => `
+      <div class="cart-row">
+        <img src="${it.img}" alt="${it.name}">
+        <div class="cart-row-info">
+          <div class="nm">${it.name}</div>
+          <div class="bottom">
+            <div class="qty-ctrl">
+              <button onclick="changeCartQty(${it.id},-1)">&minus;</button>
+              <span>${it.qty}</span>
+              <button onclick="changeCartQty(${it.id},1)">+</button>
+            </div>
+            <span class="row-price">${fmt(it.price*it.qty)}</span>
+          </div>
+          <a class="remove-link" onclick="removeFromCart(${it.id})">Remover</a>
+        </div>
+      </div>
+    `).join('');
+    foot.style.display = "block";
+    const sub = cartSubtotal();
+    const discount = couponDiscountAmount(sub);
+    const frete = shippingCost(sub, null); // city unknown until checkout address step
+    document.getElementById('cartSubtotal').textContent = fmt(sub);
+
+    const discLine = document.getElementById('cartDiscountLine');
+    if(discount > 0){
+      discLine.style.display = "flex";
+      document.getElementById('cartDiscount').textContent = "- " + fmt(discount);
+    } else {
+      discLine.style.display = "none";
+    }
+
+    const freteEl = document.getElementById('cartFrete');
+    if(frete === 0){
+      freteEl.textContent = "Grátis";
+      freteEl.style.color = "var(--petrol)";
+    } else {
+      freteEl.textContent = "A calcular";
+      freteEl.style.color = "var(--ink)";
+    }
+
+    const hint = document.getElementById('cartFreteHint');
+    if(frete === 0){
+      hint.textContent = "";
+    } else {
+      const falta = fmt(FREE_SHIPPING_MIN - sub);
+      hint.textContent = `Faltam ${falta} para frete grátis. Abaixo de ${fmt(FREE_SHIPPING_MIN)}, a entrega custa ${fmt(SHIPPING_FEE_PRAIA_DO_FORTE)} (Praia do Forte) ou ${fmt(SHIPPING_FEE_OUTROS)} (demais localidades) — calculado no checkout.`;
+    }
+
+    document.getElementById('cartTotal').textContent = fmt(sub - discount + (frete || 0));
+  }
+}
+function changeCartQty(id, delta){
+  cart[id] = Math.max(0, (cart[id]||0) + delta);
+  if(cart[id]===0) delete cart[id];
+  updateCartUI();
+}
+function removeFromCart(id){
+  delete cart[id];
+  updateCartUI();
+}
+
+function openCart(){
+  document.getElementById('overlay').classList.add('open');
+  document.getElementById('cartDrawer').classList.add('open');
+}
+function closeCart(){
+  document.getElementById('overlay').classList.remove('open');
+  document.getElementById('cartDrawer').classList.remove('open');
+}
+function closeAllOverlays(){
+  closeCart();
+}
+
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(window._toastTimer);
+  window._toastTimer = setTimeout(()=>t.classList.remove('show'), 2200);
+}
+
+/* ========== CHECKOUT ========== */
+const stepLabels = ["Contato","Entrega","Pagamento","Revisão"];
+let currentStep = 1;
+
+function renderStepsBar(){
+  const el = document.getElementById('stepsBar');
+  el.innerHTML = stepLabels.map((lbl,i)=>{
+    const n = i+1;
+    const cls = n===currentStep ? 'active' : (n<currentStep ? 'done' : '');
+    const inner = n<currentStep ? '&check;' : n;
+    const line = n < stepLabels.length ? '<div class="step-line"></div>' : '';
+    return `<div class="step ${cls}"><div class="n">${inner}</div><div class="lbl">${lbl}</div></div>${line}`;
+  }).join('');
+}
+
+function goToCheckout(){
+  if(cartItems().length===0){
+    showToast("Seu carrinho está vazio");
+    return;
+  }
+  closeCart();
+  currentStep = 1;
+  document.getElementById('checkoutMain').style.display = 'block';
+  document.getElementById('confirmScreen').style.display = 'none';
+  renderStepsBar();
+  goStep(1);
+  if(appliedCoupon){
+    document.getElementById('coCouponInput').value = appliedCoupon.code;
+    document.getElementById('coCouponMsg').textContent = `Cupom aplicado: ${appliedCoupon.label}`;
+    document.getElementById('coCouponMsg').style.color = "var(--petrol)";
+  }
+  renderCheckoutSummary();
+  document.getElementById('checkoutScreen').classList.add('open');
+  window.scrollTo(0,0);
+}
+function closeCheckout(){
+  document.getElementById('checkoutScreen').classList.remove('open');
+  if(pixPollTimer){ clearInterval(pixPollTimer); pixPollTimer = null; }
+}
+function backToStore(){
+  closeCheckout();
+  cart = {};
+  updateCartUI();
+}
+
+function goStep(n){
+  currentStep = n;
+  document.querySelectorAll('.co-section').forEach(s=>s.classList.remove('active'));
+  document.getElementById('step'+n).classList.add('active');
+  renderStepsBar();
+  renderCheckoutSummary();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function renderCheckoutSummary(){
+  const items = cartItems();
+  document.getElementById('coItemsList').innerHTML = items.map(it => `
+    <div class="co-item">
+      <img src="${it.img}" alt="${it.name}">
+      <div class="nm">${it.name} <span style="color:var(--graphite);">x${it.qty}</span></div>
+      <div class="p">${fmt(it.price*it.qty)}</div>
+    </div>
+  `).join('');
+  const sub = cartSubtotal();
+  const discount = couponDiscountAmount(sub);
+  const cidadeEl = document.getElementById('inpCidade');
+  const cidade = cidadeEl ? cidadeEl.value : "";
+  const frete = shippingCost(sub, cidade);
+  document.getElementById('coSubtotal').textContent = fmt(sub);
+
+  const coDiscLine = document.getElementById('coDiscountLine');
+  if(discount > 0){
+    coDiscLine.style.display = "flex";
+    document.getElementById('coDiscount').textContent = "- " + fmt(discount);
+  } else {
+    coDiscLine.style.display = "none";
+  }
+
+  const coFreteEl = document.getElementById('coFrete');
+  if(frete === 0){
+    coFreteEl.textContent = "Grátis";
+    coFreteEl.style.color = "var(--petrol)";
+  } else if(frete === null){
+    coFreteEl.textContent = "A calcular";
+    coFreteEl.style.color = "var(--ink)";
+  } else {
+    coFreteEl.textContent = fmt(frete);
+    coFreteEl.style.color = "var(--ink)";
+  }
+
+  const coHint = document.getElementById('coFreteHint');
+  if(frete === 0){
+    coHint.textContent = "Seu pedido tem direito a frete grátis.";
+  } else if(frete === null){
+    coHint.textContent = `Pedidos abaixo de ${fmt(FREE_SHIPPING_MIN)} pagam ${fmt(SHIPPING_FEE_PRAIA_DO_FORTE)} de entrega para Praia do Forte, ou ${fmt(SHIPPING_FEE_OUTROS)} para as demais localidades. Informe seu endereço para calcular.`;
+  } else {
+    coHint.textContent = `Pedidos abaixo de ${fmt(FREE_SHIPPING_MIN)} têm taxa de entrega de ${fmt(frete)} para ${cidade}.`;
+  }
+
+  document.getElementById('coTotal').textContent = fmt(sub - discount + (frete || 0));
+}
+
+function setFieldError(fgId, hasError){
+  const fg = document.getElementById(fgId);
+  if(hasError) fg.classList.add('error'); else fg.classList.remove('error');
+}
+
+function validateStep1(){
+  let ok = true;
+  const nome = document.getElementById('inpNome').value.trim();
+  const email = document.getElementById('inpEmail').value.trim();
+  const tel = document.getElementById('inpTelefone').value.trim();
+  const cpf = document.getElementById('inpCpf').value.trim();
+  const cpfDigits = cpf.replace(/\D/g, '');
+  const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+  setFieldError('fg-nome', nome.length < 3); if(nome.length<3) ok=false;
+  setFieldError('fg-email', !emailOk); if(!emailOk) ok=false;
+  setFieldError('fg-telefone', tel.length < 8); if(tel.length<8) ok=false;
+  setFieldError('fg-cpf', cpfDigits.length !== 11 && cpfDigits.length !== 14); if(cpfDigits.length !== 11 && cpfDigits.length !== 14) ok=false;
+
+  if(ok) goStep(2);
+}
+
+function validateStep2(){
+  let ok = true;
+  const fields = ['inpCep','inpCidade','inpRua','inpNumero','inpBairro','inpPiscineiro'];
+  const groups = ['fg-cep','fg-cidade','fg-rua','fg-numero','fg-bairro','fg-piscineiro'];
+  fields.forEach((fid,i)=>{
+    const val = document.getElementById(fid).value.trim();
+    const bad = val.length < 2;
+    setFieldError(groups[i], bad);
+    if(bad) ok = false;
+  });
+
+  // CEP must fall within the delivery area — if the basic fields are filled
+  // but the CEP is outside our coverage, block checkout entirely.
+  if(ok){
+    const cepVal = document.getElementById('inpCep').value.trim();
+    const cepEl = document.getElementById('errCep');
+    if(!cepInDeliveryArea(cepVal)){
+      setFieldError('fg-cep', true);
+      cepEl.textContent = "Não entregamos nesse CEP. Atendemos apenas Praia do Forte, Guarajuba, Costa do Sauípe, Imbassaí, Interlagos e Itacimirim.";
+      ok = false;
+    } else {
+      cepEl.textContent = "Informe o CEP.";
+    }
+  }
+
+  if(ok) goStep(3);
+}
+
+function selectPay(type){
+  selectedPayment = type;
+  document.querySelectorAll('.pay-opt').forEach(o=>o.classList.remove('selected'));
+  document.querySelector(`.pay-opt[data-pay="${type}"]`).classList.add('selected');
+  document.getElementById('cardFields').style.display = type==='cartao' ? 'block' : 'none';
+}
+
+function validateStep3(){
+  let ok = true;
+  if(selectedPayment === 'cartao'){
+    const num = document.getElementById('inpCardNum').value.trim();
+    const val = document.getElementById('inpCardVal').value.trim();
+    const cvv = document.getElementById('inpCardCvv').value.trim();
+    setFieldError('fg-cardnum', num.length < 12); if(num.length<12) ok=false;
+    setFieldError('fg-cardval', val.length < 4); if(val.length<4) ok=false;
+    setFieldError('fg-cardcvv', cvv.length < 3); if(cvv.length<3) ok=false;
+  }
+  if(ok){
+    fillReview();
+    goStep(4);
+  }
+}
+
+function fillReview(){
+  const nome = document.getElementById('inpNome').value.trim();
+  const email = document.getElementById('inpEmail').value.trim();
+  const tel = document.getElementById('inpTelefone').value.trim();
+  document.getElementById('reviewNome').textContent = nome;
+  document.getElementById('reviewContato').textContent = email + " · " + tel;
+
+  const cep = document.getElementById('inpCep').value.trim();
+  const cidade = document.getElementById('inpCidade').value.trim();
+  const rua = document.getElementById('inpRua').value.trim();
+  const numero = document.getElementById('inpNumero').value.trim();
+  const bairro = document.getElementById('inpBairro').value.trim();
+  const ref = document.getElementById('inpRef').value.trim();
+  const piscineiro = document.getElementById('inpPiscineiro').value.trim();
+  document.getElementById('reviewEndereco').innerHTML =
+    `${rua}, ${numero}<br>${bairro} — ${cidade}<br>CEP ${cep}` + (ref ? `<br>Referência: ${ref}` : '') +
+    `<br>Profissional/empresa da piscina: ${piscineiro}` +
+    `<br><span style="color:var(--graphite);">Entrega em até 72 horas úteis</span>`;
+
+  const payLabels = {pix:"Pix", cartao:"Cartão de crédito", entrega:"Pagamento na entrega"};
+  let payText = payLabels[selectedPayment];
+  if(selectedPayment === 'cartao'){
+    const num = document.getElementById('inpCardNum').value.trim();
+    payText += " · final " + num.slice(-4);
+  }
+  document.getElementById('reviewPagamento').textContent = payText;
+}
+
+function confirmOrder(){
+  if(selectedPayment === 'pix'){
+    startPixPayment();
+  } else {
+    // Cartão de crédito / pagamento na entrega: sem gateway configurado
+    // ainda, mantém a confirmação simulada.
+    const orderId = "LN-" + Math.floor(100000 + Math.random()*900000);
+    document.getElementById('orderIdDisplay').textContent = "Pedido " + orderId;
+    document.getElementById('checkoutMain').style.display = 'none';
+    document.getElementById('confirmScreen').style.display = 'block';
+    window.scrollTo(0,0);
+  }
+}
+
+/* ========== PIX (LiquiDX) ========== */
+// Ajuste para a URL real do backend em produção.
+const PIX_BACKEND_URL = "http://localhost:4000";
+let pixPollTimer = null;
+
+function buildOrderPayload(){
+  const items = cartItems().map(it => ({
+    productId: it.id,
+    name: it.name,
+    qty: it.qty,
+    price: it.price,
+  }));
+  const sub = cartSubtotal();
+  const discount = couponDiscountAmount(sub);
+  const cidade = document.getElementById('inpCidade').value.trim();
+  const frete = shippingCost(sub, cidade) || 0;
+
+  return {
+    customer: {
+      nome: document.getElementById('inpNome').value.trim(),
+      email: document.getElementById('inpEmail').value.trim(),
+      telefone: document.getElementById('inpTelefone').value.trim(),
+      cpf: document.getElementById('inpCpf').value.trim(),
+    },
+    endereco: {
+      cep: document.getElementById('inpCep').value.trim(),
+      cidade,
+      rua: document.getElementById('inpRua').value.trim(),
+      numero: document.getElementById('inpNumero').value.trim(),
+      bairro: document.getElementById('inpBairro').value.trim(),
+      referencia: document.getElementById('inpRef').value.trim(),
+    },
+    piscineiro: document.getElementById('inpPiscineiro').value.trim(),
+    items,
+    subtotal: sub,
+    discount,
+    frete,
+    total: Number((sub - discount + frete).toFixed(2)),
+  };
+}
+
+async function startPixPayment(){
+  document.getElementById('checkoutMain').style.display = 'none';
+  document.getElementById('confirmScreen').style.display = 'none';
+  document.getElementById('pixWaitScreen').style.display = 'block';
+  document.getElementById('pixLoading').style.display = 'block';
+  document.getElementById('pixContent').style.display = 'none';
+  document.getElementById('pixErrorBox').style.display = 'none';
+  window.scrollTo(0,0);
+
+  try{
+    const payload = buildOrderPayload();
+    const res = await fetch(PIX_BACKEND_URL + '/api/checkout/pix', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(payload),
+    });
+    const data = await res.json();
+    if(!res.ok){
+      throw new Error(data.error || 'Não foi possível gerar o Pix.');
+    }
+
+    window._pixOrderId = data.orderId;
+    window._pixCopyPaste = data.qrCopyPaste;
+
+    document.getElementById('pixLoading').style.display = 'none';
+    document.getElementById('pixContent').style.display = 'block';
+    document.getElementById('pixQrImg').src = data.qrImageUrl;
+    document.getElementById('pixCopyPaste').textContent = data.qrCopyPaste;
+
+    pixPollTimer = setInterval(() => pollPixStatus(data.orderId), 4000);
+  } catch(err){
+    document.getElementById('pixLoading').style.display = 'none';
+    document.getElementById('pixErrorBox').style.display = 'block';
+    document.getElementById('pixErrorBox').textContent = err.message || 'Não foi possível gerar o Pix neste momento. Tente novamente em alguns instantes.';
+  }
+}
+
+async function pollPixStatus(orderId){
+  try{
+    const res = await fetch(PIX_BACKEND_URL + '/api/checkout/pix/' + orderId + '/status');
+    const data = await res.json();
+    if(!res.ok) return;
+
+    if(data.status === 'PAID'){
+      clearInterval(pixPollTimer);
+      document.getElementById('pixWaitScreen').style.display = 'none';
+      document.getElementById('orderIdDisplay').textContent = "Pedido " + orderId;
+      document.getElementById('confirmScreen').style.display = 'block';
+      cart = {};
+      updateCartUI();
+      window.scrollTo(0,0);
+    } else if(data.status === 'EXPIRED' || data.status === 'CANCELED'){
+      clearInterval(pixPollTimer);
+      document.getElementById('pixContent').style.display = 'none';
+      document.getElementById('pixErrorBox').style.display = 'block';
+      document.getElementById('pixErrorBox').textContent = 'Este Pix expirou. Volte ao carrinho e finalize a compra novamente para gerar um novo código.';
+    }
+    // PENDING: continua aguardando, próximo poll.
+  } catch(err){
+    // Falha de rede pontual no polling — não interrompe, tenta de novo no próximo ciclo.
+  }
+}
+
+function copyPixCode(){
+  if(!window._pixCopyPaste) return;
+  navigator.clipboard.writeText(window._pixCopyPaste).then(() => {
+    showToast('Código Pix copiado');
+  }).catch(() => {
+    showToast('Não foi possível copiar automaticamente — selecione o código manualmente.');
+  });
+}
+
+/* ========== INIT ========== */
+renderFilters();
+renderCatalog();
+updateCartUI();
+</script>
+</body>
+</html>
