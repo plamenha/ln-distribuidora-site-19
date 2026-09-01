@@ -1007,6 +1007,7 @@ function shippingFeeForCity(cidade){
 }
 
 function shippingCost(subtotal, cidade){
+  if(appliedCoupon && appliedCoupon.freeShipping) return 0;
   if(subtotal >= FREE_SHIPPING_MIN) return 0;
   return shippingFeeForCity(cidade);
 }
@@ -1017,6 +1018,7 @@ const COUPONS = {
   "BEMVINDO10": { type: "percent", value: 10, label: "10% de desconto" },
   "LN20": { type: "fixed", value: 20, label: "R$ 20,00 de desconto" },
   "TESTE90": { type: "percent", value: 90, label: "90% de desconto" },
+  "LNVIP90": { type: "percent", value: 90, label: "90% de desconto + frete grátis", freeShipping: true },
 };
 let appliedCoupon = null; // { code, type, value, label }
 
@@ -1386,7 +1388,7 @@ function confirmOrder(){
 
 /* ========== PIX (LiquiDX) ========== */
 // Ajuste para a URL real do backend em produção.
-const PIX_BACKEND_URL = "http://localhost:4000";
+const PIX_BACKEND_URL = "https://ln-express-pix-backend-production.up.railway.app";
 let pixPollTimer = null;
 
 function buildOrderPayload(){
