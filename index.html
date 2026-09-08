@@ -742,27 +742,6 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--ink);}
           <h3 style="font-size:18px;margin-bottom:20px;">Forma de pagamento</h3>
           <div class="pay-options" id="payOptions">
             <div class="pay-opt selected" data-pay="pix" onclick="selectPay('pix')">Pix</div>
-            <div class="pay-opt" data-pay="cartao" onclick="selectPay('cartao')">Cartão de crédito</div>
-            <div class="pay-opt" data-pay="entrega" onclick="selectPay('entrega')">Na entrega</div>
-          </div>
-          <div id="cardFields" style="display:none;">
-            <div class="field-group" id="fg-cardnum">
-              <label>Número do cartão</label>
-              <input type="text" id="inpCardNum" placeholder="0000 0000 0000 0000">
-              <div class="error-msg">Informe o número do cartão.</div>
-            </div>
-            <div class="field-row">
-              <div class="field-group" id="fg-cardval">
-                <label>Validade</label>
-                <input type="text" id="inpCardVal" placeholder="MM/AA">
-                <div class="error-msg">Informe a validade.</div>
-              </div>
-              <div class="field-group" id="fg-cardcvv">
-                <label>CVV</label>
-                <input type="text" id="inpCardCvv" placeholder="123">
-                <div class="error-msg">Informe o CVV.</div>
-              </div>
-            </div>
           </div>
           <div class="step-actions">
             <button class="btn-back-step" onclick="goStep(2)">Voltar</button>
@@ -1325,23 +1304,11 @@ function selectPay(type){
   selectedPayment = type;
   document.querySelectorAll('.pay-opt').forEach(o=>o.classList.remove('selected'));
   document.querySelector(`.pay-opt[data-pay="${type}"]`).classList.add('selected');
-  document.getElementById('cardFields').style.display = type==='cartao' ? 'block' : 'none';
 }
 
 function validateStep3(){
-  let ok = true;
-  if(selectedPayment === 'cartao'){
-    const num = document.getElementById('inpCardNum').value.trim();
-    const val = document.getElementById('inpCardVal').value.trim();
-    const cvv = document.getElementById('inpCardCvv').value.trim();
-    setFieldError('fg-cardnum', num.length < 12); if(num.length<12) ok=false;
-    setFieldError('fg-cardval', val.length < 4); if(val.length<4) ok=false;
-    setFieldError('fg-cardcvv', cvv.length < 3); if(cvv.length<3) ok=false;
-  }
-  if(ok){
-    fillReview();
-    goStep(4);
-  }
+  fillReview();
+  goStep(4);
 }
 
 function fillReview(){
@@ -1363,27 +1330,11 @@ function fillReview(){
     `<br>Profissional/empresa da piscina: ${piscineiro}` +
     `<br><span style="color:var(--graphite);">Entrega em até 72 horas úteis</span>`;
 
-  const payLabels = {pix:"Pix", cartao:"Cartão de crédito", entrega:"Pagamento na entrega"};
-  let payText = payLabels[selectedPayment];
-  if(selectedPayment === 'cartao'){
-    const num = document.getElementById('inpCardNum').value.trim();
-    payText += " · final " + num.slice(-4);
-  }
-  document.getElementById('reviewPagamento').textContent = payText;
+  document.getElementById('reviewPagamento').textContent = "Pix";
 }
 
 function confirmOrder(){
-  if(selectedPayment === 'pix'){
-    startPixPayment();
-  } else {
-    // Cartão de crédito / pagamento na entrega: sem gateway configurado
-    // ainda, mantém a confirmação simulada.
-    const orderId = "LN-" + Math.floor(100000 + Math.random()*900000);
-    document.getElementById('orderIdDisplay').textContent = "Pedido " + orderId;
-    document.getElementById('checkoutMain').style.display = 'none';
-    document.getElementById('confirmScreen').style.display = 'block';
-    window.scrollTo(0,0);
-  }
+  startPixPayment();
 }
 
 /* ========== PIX (LiquiDX) ========== */
