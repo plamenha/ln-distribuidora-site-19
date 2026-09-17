@@ -1095,11 +1095,14 @@ const COUPONS = {
   "JOAOARGOLLO": { type: "percent", value: 7, label: "7% de desconto" },
   "PARAISO": { type: "percent", value: 7, label: "7% de desconto" },
   "OSCOROS": { type: "percent", value: 5, label: "5% de desconto" },
+  "PARQUECOSTAVERDE": { type: "percent", value: 5, label: "5% de desconto em pedidos acima de R$ 400", minSubtotal: 400 },
 };
 let appliedCoupon = null; // { code, type, value, label }
 
 function couponDiscountAmount(subtotal){
   if(!appliedCoupon) return 0;
+  // Cupom com pedido mínimo: abaixo do valor, não desconta nada.
+  if(appliedCoupon.minSubtotal && subtotal < appliedCoupon.minSubtotal) return 0;
   const raw = appliedCoupon.type === "percent"
     ? subtotal * appliedCoupon.value / 100
     : appliedCoupon.value;
@@ -1120,8 +1123,15 @@ function applyCouponFrom(source){
     msgEl.style.color = "var(--graphite)";
   } else if(COUPONS[raw]){
     appliedCoupon = { code: raw, ...COUPONS[raw] };
-    msgEl.textContent = `Cupom aplicado: ${appliedCoupon.label}`;
-    msgEl.style.color = "var(--petrol)";
+    const sub = cartSubtotal();
+    if(appliedCoupon.minSubtotal && sub < appliedCoupon.minSubtotal){
+      const falta = fmt(appliedCoupon.minSubtotal - sub);
+      msgEl.textContent = `Cupom válido em pedidos acima de ${fmt(appliedCoupon.minSubtotal)}. Faltam ${falta}.`;
+      msgEl.style.color = "var(--danger)";
+    } else {
+      msgEl.textContent = `Cupom aplicado: ${appliedCoupon.label}`;
+      msgEl.style.color = "var(--petrol)";
+    }
   } else {
     appliedCoupon = null;
     msgEl.textContent = "Cupom inválido.";
