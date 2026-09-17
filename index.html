@@ -666,7 +666,7 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--ink);}
           <div class="field-group" id="fg-cpf">
             <label>CPF ou CNPJ</label>
             <input type="text" id="inpCpf" placeholder="000.000.000-00">
-            <div style="font-size:11.5px;color:var(--ink);margin-top:5px;">O Pix precisa ser pago por esse mesmo CPF/CNPJ.</div>
+            <div style="font-size:11.5px;color:var(--ink);margin-top:5px;">O pagamento precisa ser realizado por esse mesmo CPF/CNPJ.</div>
             <div class="error-msg">Informe um CPF ou CNPJ válido.</div>
           </div>
           <div class="step-actions">
@@ -680,13 +680,13 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--ink);}
           <h3 style="font-size:18px;margin-bottom:8px;">Endereço de entrega</h3>
           <p style="font-size:12.5px;color:var(--graphite);line-height:1.6;margin:0 0 20px;">
             Entregamos apenas em Praia do Forte, Guarajuba, Costa do Sauípe, Imbassaí, Interlagos e Itacimirim.
-            Frete grátis em pedidos acima de R$ 200. Abaixo disso, a entrega custa R$ 50 para Praia do Forte
-            ou R$ 70 para as demais localidades. Prazo de entrega: até 72 horas úteis.<br>Entregamos também no Condomínio Parque Costa Verde, em Salvador: frete grátis acima de R$ 350, ou R$ 120 abaixo disso, em até 4 dias úteis.
+            Frete grátis em pedidos acima de R$ 200. Prazo de entrega: até 72 horas úteis.<br>
+            Entregamos também em alguns condomínios específicos em Salvador — consulte a disponibilidade com nosso time.
           </p>
           <div class="coupon-box" id="empCodeBox" style="margin:0 0 20px;display:none;">
             <label style="display:block;font-size:12.5px;font-weight:600;margin-bottom:6px;">Código do empreendimento (opcional)</label>
             <div style="display:flex;gap:8px;">
-              <input type="text" id="inpEmpCode" placeholder="Ex: ALDEIA" style="flex:1;padding:9px 12px;border:0.5px solid var(--line-sand);border-radius:2px;font-size:12.5px;text-transform:uppercase;background:#fff;">
+              <input type="text" id="inpEmpCode" placeholder="Digite o código" style="flex:1;padding:9px 12px;border:0.5px solid var(--line-sand);border-radius:2px;font-size:12.5px;text-transform:uppercase;background:#fff;">
               <button type="button" onclick="applyEmpreendimento()" style="padding:9px 14px;border:0.5px solid var(--ink);background:#fff;border-radius:2px;font-size:12.5px;font-weight:600;">Aplicar</button>
             </div>
             <div style="font-size:11.5px;color:var(--graphite);margin-top:6px;">Se o seu condomínio tem um código, preencha o endereço automaticamente.</div>
