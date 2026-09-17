@@ -681,8 +681,17 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--ink);}
           <p style="font-size:12.5px;color:var(--graphite);line-height:1.6;margin:0 0 20px;">
             Entregamos apenas em Praia do Forte, Guarajuba, Costa do Sauípe, Imbassaí, Interlagos e Itacimirim.
             Frete grátis em pedidos acima de R$ 200. Abaixo disso, a entrega custa R$ 50 para Praia do Forte
-            ou R$ 70 para as demais localidades. Prazo de entrega: até 72 horas úteis.
+            ou R$ 70 para as demais localidades. Prazo de entrega: até 72 horas úteis.<br>Entregamos também no Condomínio Parque Costa Verde, em Salvador: frete grátis acima de R$ 350, ou R$ 120 abaixo disso, em até 4 dias úteis.
           </p>
+          <div class="coupon-box" id="empCodeBox" style="margin:0 0 20px;display:none;">
+            <label style="display:block;font-size:12.5px;font-weight:600;margin-bottom:6px;">Código do empreendimento (opcional)</label>
+            <div style="display:flex;gap:8px;">
+              <input type="text" id="inpEmpCode" placeholder="Ex: ALDEIA" style="flex:1;padding:9px 12px;border:0.5px solid var(--line-sand);border-radius:2px;font-size:12.5px;text-transform:uppercase;background:#fff;">
+              <button type="button" onclick="applyEmpreendimento()" style="padding:9px 14px;border:0.5px solid var(--ink);background:#fff;border-radius:2px;font-size:12.5px;font-weight:600;">Aplicar</button>
+            </div>
+            <div style="font-size:11.5px;color:var(--graphite);margin-top:6px;">Se o seu condomínio tem um código, preencha o endereço automaticamente.</div>
+            <div id="empCodeMsg" style="font-size:11.5px;margin-top:6px;"></div>
+          </div>
           <div class="field-row">
             <div class="field-group" id="fg-cep" style="grid-column:1/2;">
               <label>CEP</label>
@@ -699,6 +708,7 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--ink);}
                 <option>Imbassaí</option>
                 <option>Interlagos</option>
                 <option>Itacimirim</option>
+                <option>Salvador</option>
                 <option>Outra localidade do Litoral Norte</option>
               </select>
               <div class="error-msg">Selecione a localidade.</div>
@@ -957,6 +967,9 @@ function addModalToCart(){
 
 /* ========== DELIVERY AREA & SHIPPING RULES ========== */
 const FREE_SHIPPING_MIN = 200;
+// Salvador é exceção: fora da rota do litoral norte, tem regra própria.
+const SALVADOR_FREE_MIN = 350;
+const SHIPPING_FEE_SALVADOR = 120;
 const SHIPPING_FEE_PRAIA_DO_FORTE = 50;
 const SHIPPING_FEE_OUTROS = 70;
 
@@ -968,6 +981,7 @@ const CEP_RANGES = [
   [42840310, 42840594], // Guarajuba
   [42840660, 42840850], // Itacimirim
   [42829320, 42829900], // Interlagos
+  [41613000, 41613099], // Cond. Parque Costa Verde — Piatã, Salvador
 ];
 
 function cepInDeliveryArea(cepRaw){
@@ -989,8 +1003,76 @@ function shippingFeeForCity(cidade){
 
 function shippingCost(subtotal, cidade){
   if(appliedCoupon && appliedCoupon.freeShipping) return 0;
+  if(cidade === "Salvador"){
+    return subtotal >= SALVADOR_FREE_MIN ? 0 : SHIPPING_FEE_SALVADOR;
+  }
   if(subtotal >= FREE_SHIPPING_MIN) return 0;
   return shippingFeeForCity(cidade);
+}
+
+// Prazo: o litoral norte é rota própria; Salvador é entrega avulsa.
+function prazoEntrega(cidade){
+  return cidade === "Salvador" ? "até 4 dias úteis" : "até 72 horas úteis";
+}
+
+/* ========== EMPREENDIMENTOS ==========
+   Código digitado pelo cliente preenche a parte comum do endereço.
+   Número da casa e ponto de referência ficam sempre em aberto.
+   `cidade` precisa ser idêntica a uma das opções do select de localidade. */
+const EMPREENDIMENTOS = {
+  "CONDOMINIOPARQUECOSTAVERDE": { nome: "Condomínio Parque Costa Verde", cep: "41613-036", cidade: "Salvador", bairro: "Piatã" },
+  // "ALDEIA": { nome: "Lot. Aldeia dos Pescadores", cep: "48280-000", cidade: "Praia do Forte", rua: "Lot. Aldeia dos Pescadores", bairro: "Praia do Forte" },
+};
+
+// O campo só aparece quando existe ao menos um empreendimento cadastrado.
+(function(){
+  function toggleEmpBox(){
+    const box = document.getElementById('empCodeBox');
+    if(box && Object.keys(EMPREENDIMENTOS).length > 0) box.style.display = '';
+  }
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', toggleEmpBox);
+  } else {
+    toggleEmpBox();
+  }
+})();
+
+function applyEmpreendimento(){
+  const el = document.getElementById('inpEmpCode');
+  const msg = document.getElementById('empCodeMsg');
+  const raw = el.value.trim().toUpperCase().replace(/\s+/g, '');
+
+  if(!raw){
+    msg.textContent = "";
+    return;
+  }
+
+  const emp = EMPREENDIMENTOS[raw];
+  if(!emp){
+    msg.textContent = "Código não encontrado. Preencha o endereço manualmente.";
+    msg.style.color = "var(--danger)";
+    return;
+  }
+
+  document.getElementById('inpCep').value = emp.cep || '';
+  document.getElementById('inpRua').value = emp.rua || '';
+  document.getElementById('inpBairro').value = emp.bairro || '';
+
+  const sel = document.getElementById('inpCidade');
+  if(emp.cidade){
+    const opt = Array.from(sel.options).find(o => (o.value || o.textContent).trim() === emp.cidade);
+    if(opt) sel.value = opt.value || opt.textContent;
+  }
+
+  ['fg-cep','fg-rua','fg-bairro','fg-cidade'].forEach(id=>setFieldError(id, false));
+
+  msg.textContent = `${emp.nome}: endereço preenchido. Informe o número da sua casa.`;
+  msg.style.color = "var(--petrol)";
+
+  renderCheckoutSummary();
+  const num = document.getElementById('inpNumero');
+  num.focus();
+  num.scrollIntoView({ block: 'center', behavior: 'smooth' });
 }
 
 /* ========== COUPONS ========== */
@@ -1345,7 +1427,7 @@ function fillReview(){
   document.getElementById('reviewEndereco').innerHTML =
     `${rua}, ${numero}<br>${bairro} — ${cidade}<br>CEP ${cep}` + (ref ? `<br>Referência: ${ref}` : '') +
     `<br>Profissional/empresa da piscina: ${piscineiro}` +
-    `<br><span style="color:var(--graphite);">Entrega em até 72 horas úteis</span>`;
+    `<br><span style="color:var(--graphite);">Entrega em ${prazoEntrega(cidade)}</span>`;
 
   document.getElementById('reviewPagamento').textContent = "Pix";
 }
