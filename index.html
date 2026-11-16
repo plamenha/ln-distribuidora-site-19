@@ -416,6 +416,7 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--ink);}
   .hero-stats{gap:24px;}
 }
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
 <body>
 
@@ -809,8 +810,8 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--ink);}
       <p id="pixCpfNotice" style="margin-bottom:20px;font-size:12.5px;color:var(--ink);background:var(--sand);border-radius:4px;padding:10px 12px;line-height:1.5;">Pague com o mesmo CPF/CNPJ informado no cadastro.</p>
       <div id="pixLoading" style="padding:30px 0;color:var(--graphite);font-size:13.5px;">Gerando cobrança Pix…</div>
       <div id="pixContent" style="display:none;">
-        <img id="pixQrImg" src="" alt="QR Code Pix" style="width:220px;height:220px;margin:0 auto 18px;display:block;border:1px solid var(--line-sand);border-radius:4px;">
-        <div style="background:var(--sand);border-radius:4px;padding:12px;font-family:'IBM Plex Mono',monospace;font-size:11px;word-break:break-all;margin-bottom:12px;" id="pixCopyPaste"></div>
+        <div id="pixQrBox" style="width:220px;height:220px;margin:0 auto 18px;display:flex;align-items:center;justify-content:center;border:1px solid var(--line-sand);border-radius:4px;background:#fff;"></div>
+        <div style="background:var(--sand);border-radius:4px;padding:12px;font-family:'IBM Plex Mono',monospace;font-size:11px;word-break:break-all;margin-bottom:12px;" id="pixCopyPaste" onclick="selecionarCodigoPix()" style="cursor:pointer;"></div>
         <button class="btn btn-primary" style="background:var(--ink);color:#fff;width:100%;justify-content:center;margin-bottom:14px;" onclick="copyPixCode()">Copiar código Pix</button>
         <div style="font-size:12.5px;color:var(--graphite);" id="pixStatusMsg">Aguardando confirmação do pagamento…</div>
       </div>
@@ -1498,6 +1499,10 @@ async function startPixPayment(){
   document.getElementById('pixErrorBox').style.display = 'none';
   window.scrollTo(0,0);
 
+  // Trava contra duplo clique: o pedido não pode ser enviado duas vezes.
+  if(window._pixEnviando) return;
+  window._pixEnviando = true;
+
   try{
     const payload = buildOrderPayload();
     const res = await fetch(PIX_BACKEND_URL + '/api/checkout/pix', {
@@ -1506,23 +1511,66 @@ async function startPixPayment(){
       body: JSON.stringify(payload),
     });
     const data = await res.json();
-    if(!res.ok){
+    if(!res.ok && res.status !== 202){
       throw new Error(data.error || 'Não foi possível gerar o Pix.');
     }
 
     window._pixOrderId = data.orderId;
-    window._pixCopyPaste = data.qrCopyPaste;
-
     document.getElementById('pixLoading').style.display = 'none';
     document.getElementById('pixContent').style.display = 'block';
-    document.getElementById('pixQrImg').src = data.qrImageUrl;
-    document.getElementById('pixCopyPaste').textContent = data.qrCopyPaste;
+    renderPix(data);
 
-    pixPollTimer = setInterval(() => pollPixStatus(data.orderId), 4000);
+    // A confirmação vem da consulta ao backend, que por sua vez consulta
+    // o provedor. Intervalo de 5s para não sobrecarregar.
+    pixPollTimer = setInterval(() => pollPixStatus(data.orderId), 5000);
   } catch(err){
     document.getElementById('pixLoading').style.display = 'none';
     document.getElementById('pixErrorBox').style.display = 'block';
     document.getElementById('pixErrorBox').textContent = err.message || 'Não foi possível gerar o Pix neste momento. Tente novamente em alguns instantes.';
+  } finally {
+    window._pixEnviando = false;
+  }
+}
+
+/* Desenha o QR a partir do código copia-e-cola. Se a biblioteca não
+   carregar ou o código for longo demais para o QR, o cliente ainda
+   consegue pagar pelo copia-e-cola — então avisamos em vez de deixar
+   um quadrado vazio. */
+function renderPix(data){
+  const box = document.getElementById('pixQrBox');
+  const txt = document.getElementById('pixCopyPaste');
+  const status = document.getElementById('pixStatusMsg');
+
+  window._pixCopyPaste = data.pixCopiaECola || null;
+
+  if(!data.pixCopiaECola){
+    box.innerHTML = '';
+    txt.textContent = '';
+    status.textContent = data.mensagem || 'Estamos gerando a sua cobrança Pix. Isso leva alguns segundos.';
+    return;
+  }
+
+  // O código vem primeiro: é o que garante o pagamento.
+  txt.textContent = data.pixCopiaECola;
+  status.textContent = 'Aguardando confirmação do pagamento…';
+
+  box.innerHTML = '';
+  let desenhou = false;
+  if(window.QRCode){
+    try{
+      new QRCode(box, {
+        text: data.pixCopiaECola,
+        width: 200, height: 200,
+        correctLevel: QRCode.CorrectLevel.L,
+      });
+      desenhou = true;
+    } catch(e){
+      desenhou = false;
+    }
+  }
+  if(!desenhou){
+    box.innerHTML = '<div style="font-size:12px;color:var(--graphite);text-align:center;padding:16px;line-height:1.5;">'
+      + 'Use o código<br>copia e cola abaixo<br>para pagar.</div>';
   }
 }
 
@@ -1532,7 +1580,13 @@ async function pollPixStatus(orderId){
     const data = await res.json();
     if(!res.ok) return;
 
-    if(data.status === 'PAID'){
+    // O código Pix pode chegar depois da primeira resposta, quando a
+    // criação da cobrança ainda estava em andamento.
+    if(data.pixCopiaECola && data.pixCopiaECola !== window._pixCopyPaste){
+      renderPix(data);
+    }
+
+    if(data.situacao === 'PAGO'){
       clearInterval(pixPollTimer);
       document.getElementById('pixWaitScreen').style.display = 'none';
       document.getElementById('orderIdDisplay').textContent = "Pedido " + orderId;
@@ -1540,25 +1594,62 @@ async function pollPixStatus(orderId){
       cart = {};
       updateCartUI();
       window.scrollTo(0,0);
-    } else if(data.status === 'EXPIRED' || data.status === 'CANCELED'){
+    } else if(data.situacao === 'NAO_PAGO'){
       clearInterval(pixPollTimer);
       document.getElementById('pixContent').style.display = 'none';
       document.getElementById('pixErrorBox').style.display = 'block';
-      document.getElementById('pixErrorBox').textContent = 'Este Pix expirou. Volte ao carrinho e finalize a compra novamente para gerar um novo código.';
+      document.getElementById('pixErrorBox').textContent = data.mensagem ||
+        'Este Pix não pôde ser concluído. Volte ao carrinho e finalize a compra novamente para gerar um novo código.';
     }
-    // PENDING: continua aguardando, próximo poll.
+    // AGUARDANDO: segue tentando no próximo ciclo.
   } catch(err){
-    // Falha de rede pontual no polling — não interrompe, tenta de novo no próximo ciclo.
+    // Falha de rede pontual não interrompe o acompanhamento.
   }
 }
 
 function copyPixCode(){
-  if(!window._pixCopyPaste) return;
-  navigator.clipboard.writeText(window._pixCopyPaste).then(() => {
-    showToast('Código Pix copiado');
-  }).catch(() => {
-    showToast('Não foi possível copiar automaticamente — selecione o código manualmente.');
-  });
+  const codigo = window._pixCopyPaste || (document.getElementById('pixCopyPaste') || {}).textContent;
+  if(!codigo) return;
+
+  // Caminho moderno. Exige HTTPS e permissão — pode ser negado.
+  if(navigator.clipboard && window.isSecureContext){
+    navigator.clipboard.writeText(codigo)
+      .then(() => showToast('Código Pix copiado'))
+      .catch(() => copiarPorTextarea(codigo));
+    return;
+  }
+  copiarPorTextarea(codigo);
+}
+
+/* Plano B: textarea temporária + execCommand. Funciona em navegadores e
+   webviews onde a área de transferência moderna é bloqueada. */
+function copiarPorTextarea(codigo){
+  try{
+    const ta = document.createElement('textarea');
+    ta.value = codigo;
+    ta.setAttribute('readonly', '');
+    ta.style.position = 'fixed';
+    ta.style.top = '-1000px';
+    document.body.appendChild(ta);
+    ta.select();
+    ta.setSelectionRange(0, codigo.length);
+    const ok = document.execCommand('copy');
+    document.body.removeChild(ta);
+    showToast(ok ? 'Código Pix copiado' : 'Toque no código e segure para copiar.');
+  } catch(e){
+    showToast('Toque no código e segure para copiar.');
+  }
+}
+
+/* Toque no próprio código seleciona tudo — última saída se nada copiar. */
+function selecionarCodigoPix(){
+  const el = document.getElementById('pixCopyPaste');
+  if(!el) return;
+  const range = document.createRange();
+  range.selectNodeContents(el);
+  const sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(range);
 }
 
 /* ========== INIT ========== */
